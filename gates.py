@@ -48,23 +48,29 @@ def mandg(*args):
     
     
 
-def multiplexor(a, b, c):
-    return
+def muxg(a, b, c):
+    """
+    a b c out
+    0 0 0 0
+    0 0 1 0
+    0 1 0 0
+    0 1 1 1
+    1 0 0 1
+    1 0 1 0
+    1 1 0 1
+    1 1 1 1
 
-"""
-a b c out
-0 0 0 0
-0 0 1 0
-0 1 0 0
-0 1 1 1
-1 0 0 1
-1 0 1 0
-1 1 0 1
-1 1 1 1
+    _      __     _   
+    abc + abc + abc + abc
+    
+       _         _ _
+    bc(a + a) + ac(b + b)
 
-_      __     _
-(abc + abc) + abc + abc
-"""
+          _
+    ac + bc
+    """
+    return andg(org(a,c), org(b,notg(c)))
+
 
 def test_gate(gate, no_of_args):
     results = execute_gate(gate, no_of_args)
@@ -94,7 +100,7 @@ def generate_possibilities(no_of_args):
     return poss
 
 def main():
-    gates = [andg, nandg, norg, notg, org, xorg, xnorg]
+    gates = [andg, nandg, norg, notg, org, xorg, xnorg, muxg]
     for i in gates:
         test_gate(i, i.func_code.co_argcount)
 
